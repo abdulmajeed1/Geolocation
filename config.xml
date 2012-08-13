@@ -4,15 +4,15 @@
 	id		= "com.phonegap.getting.started"
 	version 	= "1.0.0">
 
-	<name>PhoneGap: Getting Started</name>
+	<name>Geolocation</name>
 
 	<description>
-		A template for getting started with PhoneGap development and build.phonegap.com
+		Geolocation Test App
 	</description>
 
-	<author href="http://alunny.github.com"
-		email="andrew.lunny@nitobi.com">
-		Andrew Lunny
+	<author href="https://github.com/cmoody"
+		email="cmoody06@gmail.com">
+		Chase Moody
 	</author>
 
 	<icon src="icon.png" gap:role="default" />
