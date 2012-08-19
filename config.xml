@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/1.0"
-	id		= "com.cmoody.festivalflagger"
-	version 	= "0.0.4">
+	id		= "com.chasemoody.festivalflagger"
+	version 	= "0.0.8">
 
 	<name>Geolocation</name>
 
 	<description>
-		Geolocation Test App
+		JQMobile + Geolocation Test App
 	</description>
 
 	<author href="https://github.com/cmoody"
@@ -17,7 +17,7 @@
 
 	<icon src="icon.png" gap:role="default" />
 
-	<access origin="*" />
+	<access origin="http://maps.google.com" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
