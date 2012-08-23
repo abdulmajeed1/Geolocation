@@ -11,23 +11,27 @@
 			document.addEventListener("deviceready", onDeviceReady, false);
 
 			function onDeviceReady() {
-				navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
-				
 				$( document ).delegate("#coords", "pageinit", function() {
-				  	$('#coords_holder').html('<p>Latitude: ' + position.coords.latitude + '</p></p>Longitude: ' + position.coords.longitude + '</p>');
+				  	navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
 				});
 				
 				$( document ).delegate("#map", "pageinit", function() {
-					//map(position.coords.latitude,position.coords.longitude,"map_holder");
+					navigator.geolocation.getCurrentPosition(buildMap, onError, { enableHighAccuracy: true });
 				});
 				
 				$( document ).delegate("#success", "pageinit", function() {
-				  alert('Success!');
+					$(function(){
+						alert('Success!');
+					});
 				});
 			}
-
+			
+			function buildMap(position){
+				map(position.coords.latitude,position.coords.longitude,"map_holder");
+			}
+			
 			function onSuccess(position) {
-				$('#coordList').html('<p>Latitude: ' + position.coords.latitude + '</p></p>Longitude: ' + position.coords.longitude + '</p>');
+				$('#coords_holder').html('<p>Latitude: ' + position.coords.latitude + '</p></p>Longitude: ' + position.coords.longitude + '</p>');
 			}
 
 			function onError(error) {
