@@ -4,9 +4,9 @@
 		<title>FlagFinder</title>
 		<link rel="stylesheet" href="assets/css/jquery.mobile-1.1.1.min.css" />
 		<style>
-			html { height: 100% }
-		  	body { height: 100%; margin: 0; padding: 0 }
-		 	#map_holder { height: 100% }
+			/*html { height: 100% }
+		  	body { height: 100%; margin: 0; padding: 0 }*/
+		 	#map_holder { height: 200px;width: 200px; }
 		</style>
 		<script type="text/javascript" src="assets/js/cordova-2.0.0.js"></script>
 		<script src="assets/js/jquery-1.8.0.min.js"></script>
@@ -28,6 +28,12 @@
 				
 				$( document ).delegate("#success", "pageinit", function() {
 					alert('Success!');
+				});
+				
+				$( document ).delegate("#camera", "pageinit", function() {
+					navigator.camera.getPicture(takePic, onFail, { quality: 50,
+					    destinationType: Camera.DestinationType.DATA_URL
+					 });
 				});
 			}
 			
@@ -56,6 +62,11 @@
 			      title:"You"
 			  });
 			}
+			
+			function takePic(imageData) {
+			    var image = document.getElementById('myImage');
+			    image.src = "data:image/jpeg;base64," + imageData;
+			}
 		</script>
 	</head>
 	<body onload="onBodyLoad()">
@@ -68,9 +79,9 @@
 				<ul data-role="listview">
 					<li><a href="#coords" data-transition="slide">Get Coords</a></li>
 					<li><a href="#map" data-transition="slide">Map</a></li>
+					<li><a href="#camera" data-transition="slide">Camera</a></li>
 					<li><a href="#success" data-transition="slide">Page Test</a></li>
 				</ul>
-				<p>Random text to see how a paragraph would look.</p>
 			</div>
 		</div>
 		<!-- End Home Page -->
@@ -93,6 +104,17 @@
 			</div>
 			<div data-role="content">	
 				<div id="map_holder"></div>
+			</div>
+		</div>
+		<!-- End Map Page -->
+		
+		<!-- Map Page -->
+		<div data-role="page" id="camera">
+			<div data-role="header">
+				<h1>Camera</h1>
+			</div>
+			<div data-role="content">	
+				<div id="myImage"></div>
 			</div>
 		</div>
 		<!-- End Map Page -->
