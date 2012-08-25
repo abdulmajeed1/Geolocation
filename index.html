@@ -13,6 +13,9 @@
 		<script src="assets/js/jquery.mobile-1.1.1.min.js"></script>
 		<script src="http://maps.google.com/maps/api/js?key=AIzaSyCJ7xhp7KwIi_rdp8WTVxja2r5KNvA1uK8&sensor=true"></script>
 		<script>
+			var pictureSource;   // picture source
+   			var destinationType; // sets the format of returned value
+   			
 			function onBodyLoad() {
 				document.addEventListener("deviceready", onDeviceReady, false);
 			}
@@ -26,21 +29,28 @@
 					navigator.geolocation.getCurrentPosition(buildMap, onError, { enableHighAccuracy: true });
 				});
 				
+				$( document ).delegate("#watch", "pageinit", function() {
+					navigator.geolocation.watchPosition(onWatch, onError, { timeout: 30000 });
+				});
+				
 				$( document ).delegate("#success", "pageinit", function() {
 					alert('Success!');
 				});
 				
 				$( document ).delegate("#camera", "pageinit", function() {
-					navigator.camera.getPicture(takePic, onFail, { quality: 50,
-					    destinationType: Camera.DestinationType.DATA_URL
-					 });
+					pictureSource=navigator.camera.PictureSourceType;
+        			destinationType=navigator.camera.DestinationType;
 				});
 			}
 			
 			function onSuccess(position) {
-				$('#coords_holder').html('<p>Latitude: ' + position.coords.latitude + '</p></p>Longitude: ' + position.coords.longitude + '</p>');
+				$('#coords_holder').html('<p>Latitude: ' + position.coords.latitude + '</p></p>Longitude: ' + position.coords.longitude + '</p><p>Accuracy: ' + position.coords.accuracy + '</p>');
 			}
-
+			
+			function onWatch(position) {
+				$('#watch_holder').html('<p>Latitude: ' + position.coords.latitude + '</p></p>Longitude: ' + position.coords.longitude + '</p><p>Accuracy: ' + position.coords.accuracy + '</p>');
+			}
+			
 			function onError(error) {
 				alert('code: '    + error.code    + '\n' +
 				'message: ' + error.message + '\n');
@@ -63,10 +73,40 @@
 			  });
 			}
 			
-			function takePic(imageData) {
-			    var image = document.getElementById('myImage');
-			    image.src = "data:image/jpeg;base64," + imageData;
-			}
+			 // Called when a photo is successfully retrieved
+		    //
+		    function onPhotoDataSuccess(imageData) {
+		      // Uncomment to view the base64 encoded image data
+		      // console.log(imageData);
+		
+		      // Get image handle
+		      //
+		      var smallImage = document.getElementById('smallImage');
+		
+		      // Unhide image elements
+		      //
+		      smallImage.style.display = 'block';
+		
+		      // Show the captured photo
+		      // The inline CSS rules are used to resize the image
+		      //
+		      smallImage.src = "data:image/jpeg;base64," + imageData;
+		    }
+		
+		    // A button will call this function
+		    //
+		    function capturePhoto() {
+		      // Take picture using device camera and retrieve image as base64-encoded string
+		      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+		        destinationType: destinationType.DATA_URL });
+		    }
+		
+		
+		    // Called if something bad happens.
+		    // 
+		    function onFail(message) {
+		      alert('Failed because: ' + message);
+		    }
 		</script>
 	</head>
 	<body onload="onBodyLoad()">
@@ -79,8 +119,9 @@
 				<ul data-role="listview">
 					<li><a href="#coords" data-transition="slide">Get Coords</a></li>
 					<li><a href="#map" data-transition="slide">Map</a></li>
+					<li><a href="#watch" data-transition="slide">Watch Position</a></li>
 					<li><a href="#camera" data-transition="slide">Camera</a></li>
-					<li><a href="#success" data-transition="slide">Page Test</a></li>
+					<li><a href="#success">Page Test</a></li>
 				</ul>
 			</div>
 		</div>
@@ -109,12 +150,24 @@
 		<!-- End Map Page -->
 		
 		<!-- Map Page -->
+		<div data-role="page" id="watch">
+			<div data-role="header">
+				<h1>Watch Geo</h1>
+			</div>
+			<div data-role="content">	
+				<div id="watch_holder"></div>
+			</div>
+		</div>
+		<!-- End Map Page -->
+		
+		<!-- Map Page -->
 		<div data-role="page" id="camera">
 			<div data-role="header">
 				<h1>Camera</h1>
 			</div>
 			<div data-role="content">	
-				<div id="myImage"></div>
+				<button onclick="capturePhoto();">Capture Photo</button> <br>
+    			<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
 			</div>
 		</div>
 		<!-- End Map Page -->
