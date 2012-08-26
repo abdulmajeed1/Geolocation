@@ -18,6 +18,10 @@ function onDeviceReady() {
 		navigator.geolocation.watchPosition(onWatch, onError, { timeout: 30000, enableHighAccuracy: true });
 	});
 	
+	$( document ).delegate("#watch_map", "pageinit", function() {
+		navigator.geolocation.watchPosition(buildMap, onError, { enableHighAccuracy: true });
+	});
+	
 	$( document ).delegate("#success", "pageinit", function() {
 		alert('Success!');
 	});
@@ -85,7 +89,6 @@ function capturePhoto() {
   navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
     destinationType: destinationType.DATA_URL });
 }
-
 
 // Called if something bad happens.
 // 
