@@ -1,6 +1,3 @@
-var pictureSource;   // picture source
-var destinationType; // sets the format of returned value
-
 function onBodyLoad() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
@@ -27,23 +24,20 @@ function onDeviceReady() {
 		});*/
 	});
 	
-	$( document ).delegate("#info", "pageinit", function() {
-		alert('Info Page');
-	});
-	
 }
 
 //navigator.geolocation.watchPosition(buildMap, onError, { enableHighAccuracy: true });
 
 /* Initialize Map */
 function mapAllLoc(data){
-	var myLatlng = new google.maps.LatLng(30.26756, -97.76716);
+	var myLatlng = new google.maps.LatLng(30.267129, -97.764269);
 
 	var mapOptions = {
       center: myLatlng,
-      zoom: 10,
+      zoom: 18,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+    
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
 	
     for (var i = 0; i < data.length; i++) {
@@ -51,6 +45,7 @@ function mapAllLoc(data){
     	var myLatLng = new google.maps.LatLng(loc[1], loc[2]);
 	    var marker = new google.maps.Marker({
 	        position: myLatLng,
+	        animation: google.maps.Animation.DROP,
 	        map: map,
 	        title: loc[0],
 	        zIndex: loc[3]

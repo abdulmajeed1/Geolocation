@@ -1,7 +1,7 @@
 Testing out JqueryMobile + Phonegap
 
 ** To Do **
-- Get full width map on Map All page
+- Get markers working
 - Create API for api.chasemoody.com
 - Ajax request to API
 - Set flag button ajax request to API

@@ -8,10 +8,12 @@
 			    width: 100%;
 			    height: 100%;
 			}
+			#map_container {
+				 position:absolute;top:40px;left:0; right:0; bottom:0;
+			}
 			#map_holder {
 				width: 100%;
 			    height: 100%;
-			    position: relative;
 			}
 		 	/*#map_holder, #watch_map_holder { height: 200px;width: 200px; }*/
 		</style>
@@ -44,7 +46,9 @@
 				<h1>Map All</h1>
 			</div>
 			<div data-role="content">	
-				<div id="map_holder"></div>
+				<div id="map_container">
+					<div id="map_holder"></div>
+				</div>
 			</div>
 		</div>
 		<!-- End Map Page -->
