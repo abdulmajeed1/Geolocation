@@ -23,11 +23,11 @@
 	<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />-->
 	
 	<access origin="http://maps.google.com" />
+	<access origin="http://api.chasemoody.com" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
-	<feature name="http://api.phonegap.com/1.0/camera"/>
-	<feature name="http://api.phonegap.com/1.0/media"/>
+	<feature name="http://api.phonegap.com/1.0/notification"/>
 	
 	<preference name="orientation" value="portrait" />
 </widget>

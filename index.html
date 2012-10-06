@@ -5,8 +5,8 @@
 		<link rel="stylesheet" href="assets/css/jquery.mobile-1.1.1.min.css" />
 		<style>
 			/*html { height: 100% }
-		  	body { height: 100%; margin: 0; padding: 0 }*/
-		 	#map_holder, #watch_map_holder { height: 200px;width: 200px; }
+		  	body { height: 100%; margin: 0; padding: 0 }
+		 	#map_holder, #watch_map_holder { height: 200px;width: 200px; }*/
 		</style>
 		<script type="text/javascript" src="assets/js/cordova-2.0.0.js"></script>
 		<script src="assets/js/jquery-1.8.0.min.js"></script>
@@ -22,83 +22,25 @@
 			</div>
 			<div data-role="content">	
 				<ul data-role="listview">
-					<li><a href="#coords" data-transition="slide">Get Coords</a></li>
-					<li><a href="#map" data-transition="slide">Map</a></li>
-					<li><a href="#watch" data-transition="slide">Watch Position</a></li>
-					<li><a href="#watch_map" data-transition="slide">Watch Map Position</a></li>
-					<li><a href="#camera" data-transition="slide">Camera</a></li>
-					<li><a href="#success">Page Test</a></li>
+					<li><a href="#plant">Plant Flag</a></li>
+					<li><a href="#map" data-transition="slide">Map All</a></li>
 				</ul>
 			</div>
 		</div>
 		<!-- End Home Page -->
 		
-		<!-- Coordinates Page -->
-		<div data-role="page" id="coords">
-			<div data-role="header">
-				<h1>Coords</h1>
-			</div>
-			<div data-role="content">	
-				<div id="coords_holder"></div>
-			</div>
-		</div>
-		<!-- End Coordinates Page -->
-		
 		<!-- Map Page -->
 		<div data-role="page" id="map">
 			<div data-role="header">
-				<h1>Map</h1>
+				<a href="#home" data-rel="back" data-role="button" data-icon="back">Back</a>
+				<h1>Map ALl</h1>
 			</div>
 			<div data-role="content">	
-				<div id="map_holder"></div>
+				<p>Map</p>
+				<div id="map_holder" style="width: 100%; height: 100%"></div>
 			</div>
 		</div>
 		<!-- End Map Page -->
-		
-		<!-- Map Page -->
-		<div data-role="page" id="watch">
-			<div data-role="header">
-				<h1>Watch Geo</h1>
-			</div>
-			<div data-role="content">	
-				<div id="watch_holder"></div>
-			</div>
-		</div>
-		<!-- End Map Page -->
-		
-		<!-- Map Page -->
-		<div data-role="page" id="watch_map">
-			<div data-role="header">
-				<h1>Watch Map</h1>
-			</div>
-			<div data-role="content">	
-				<div id="watch_map_holder"></div>
-			</div>
-		</div>
-		<!-- End Map Page -->
-		
-		<!-- Map Page -->
-		<div data-role="page" id="camera">
-			<div data-role="header">
-				<h1>Camera</h1>
-			</div>
-			<div data-role="content">	
-				<button onclick="capturePhoto();">Capture Photo</button> <br>
-    			<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-			</div>
-		</div>
-		<!-- End Map Page -->
-		
-		<!-- Success Page -->
-		<div data-role="page" id="success">
-			<div data-role="header">
-				<h1>Success</h1>
-			</div>
-			<div data-role="content">	
-				<p>Successful Load</p>
-			</div>
-		</div>
-		<!-- End Success Page -->
 		
 	</body>
 </html>
