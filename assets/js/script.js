@@ -10,11 +10,11 @@ function onDeviceReady() {
 	$( document ).delegate("#map", "pageinit", function() {
 		
 		var data = [
-		  ['Person 1', -33.890542, 151.274856, 4],
-		  ['Person 2', -33.923036, 151.259052, 5],
-		  ['Chase', -34.028249, 151.157507, 3],
-		  ['Isaac', -33.80010128657071, 151.28747820854187, 2],
-		  ['Ashley', -33.950198, 151.259302, 1]
+		  ['Person 1', 30.268167, -97.768839, 4],
+		  ['Person 2', 30.268093, -97.767444, 5],
+		  ['Chase', 30.267148, -97.76826, 3],
+		  ['Isaac', 30.267129, -97.764269, 2],
+		  ['Ashley', 30.267833, -97.769161, 1]
 		];
 		
 		mapAllLoc(data);
@@ -27,17 +27,21 @@ function onDeviceReady() {
 		});*/
 	});
 	
+	$( document ).delegate("#info", "pageinit", function() {
+		alert('Info Page');
+	});
+	
 }
 
 //navigator.geolocation.watchPosition(buildMap, onError, { enableHighAccuracy: true });
 
 /* Initialize Map */
-function buildMap(data){
+function mapAllLoc(data){
 	var myLatlng = new google.maps.LatLng(30.26756, -97.76716);
 
 	var mapOptions = {
       center: myLatlng,
-      zoom: 18,
+      zoom: 10,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
