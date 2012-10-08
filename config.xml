@@ -23,7 +23,7 @@
 	<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />-->
 	
 	<access origin="http://maps.google.com" />
-	<!--<access origin="http://api.chasemoody.com" />-->
+	<access origin="http://api.chasemoody.com" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
