@@ -10,8 +10,10 @@ function onDeviceReady() {
 	deviceID = device.uuid;
 	
 	watchID = navigator.geolocation.watchPosition(setLatLng, onFail, {enableHighAccuracy: true});
-	
-	$('.plantFlag').click(plantFlag);
+
+	$( document ).delegate("#plant", "pageinit", function() {
+		plantFlag();
+	});
 	
 	$( document ).delegate("#map", "pageinit", function() {
 		
@@ -94,12 +96,13 @@ function mapAllLoc(data){
 function plantFlag(){
 
 	$.ajax({
-	  type: "PUT",
+	  type: "POST",
+	  contentType: 'application/json',
 	  dataType: "json",
       data: formToJSONLatLng(),
-	  url: "http://api.chasemoody.com/acl/flags/",
+	  url: "http://api.chasemoody.com/acl/plant",
 	  success: function(){
-	  	alert('Flag Planted');
+	  	$('#flag_container').empty().append('<p>Flag Planted</p>');
 	  }
 	});
 	
@@ -127,6 +130,9 @@ function formToJSONComment() {
 }
 
 function formToJSONLatLng() {
+	console.log('UDID: '+deviceID);
+	console.log('Lat: '+lat);
+	console.log('Lng: '+lng);
     return JSON.stringify({
         "UDID": deviceID,
         "Lat": lat,
