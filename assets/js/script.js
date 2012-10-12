@@ -8,11 +8,11 @@ var lng,lat,deviceID;
 function onDeviceReady() {
 	
 	deviceID = device.uuid;
-	
 	watchID = navigator.geolocation.watchPosition(setLatLng, onFail, {enableHighAccuracy: true});
 
 	$( document ).delegate("#plant", "pageinit", function() {
 		plantFlag();
+		addUUID();
 	});
 	
 	$( document ).delegate("#map", "pageinit", function() {
@@ -41,7 +41,11 @@ function onDeviceReady() {
 	
 	$( document ).delegate("#info", "pageinit", function() {
 		$('.latlng').empty().append('<p>Lat: ' + lat + '</p><p>Lng: ' + lng + '</p>');
-		$('.device').empty().append(deviceID);
+		$('.device').empty().append('Device Name: '     + device.name     + '<br />' + 
+                            'Device PhoneGap: ' + device.phonegap + '<br />' + 
+                            'Device Platform: ' + device.platform + '<br />' + 
+                            'Device UUID: '     + device.uuid     + '<br />' + 
+                            'Device Version: '  + device.version  + '<br />');
 	});
 	
 	$( document ).delegate("#feedback", "pageinit", function() {
@@ -103,7 +107,8 @@ function plantFlag(){
 	  dataType: "json",
       data: formToJSONLatLng(),
 	  url: "http://api.chasemoody.com/acl/plant",
-	  success: function(){
+	  success: function(data){
+	  	console.log(data);
 	  	$('#flag_container').empty().append('<p>Flag Planted</p>');
 	  }
 	});
@@ -141,3 +146,24 @@ function formToJSONLatLng() {
         "Lng": lng
         });
 }
+
+function addUUID(){
+	$.ajax({
+	  type: "POST",
+	  contentType: 'application/json',
+	  dataType: "json",
+	  data: formToJSONDevice(),
+	  url: "http://api.chasemoody.com/acl/device",
+	  success: function(){
+	  	console.log('Device Added');
+	  }
+	});
+}
+
+function formToJSONDevice(){
+	return JSON.stringify({
+		"name": "New User",
+		"UDID": deviceID
+	});
+}
+
