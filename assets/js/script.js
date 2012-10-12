@@ -32,7 +32,9 @@ function onDeviceReady() {
 		  type: "GET",
 		  dataType: "JSON",
 		  url: "http://api.chasemoody.com/acl/flags",
-		  success: mapAllLoc()
+		  success: function(data){
+		  	mapAllLoc(data);
+		  }
 		});
 		
 	});
@@ -71,24 +73,24 @@ function setLatLng(position){
 /* Initialize Map */
 function mapAllLoc(data){
 	var myLatlng = new google.maps.LatLng(lat, lng);
-
+	var aclCenter = new google.maps.LatLng(30.268167, -97.768839);
+	
 	var mapOptions = {
-      center: myLatlng,
-      zoom: 18, //Change zoom for more of city to test out this week
+      center: aclCenter,
+      zoom: 14, //Change zoom for more of city to test out this week
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
 	
-    for (var i = 0; i < data.users.length; i++) {
-    	var loc = data.users[i];
-    	var myLatLng = new google.maps.LatLng(loc[1], loc[2]);
+    for (var i = 0; i < data.length; i++) {
+    	var loc = data[i];
+    	var myLatLng = new google.maps.LatLng(loc["Lat"], loc["Lng"]);
 	    var marker = new google.maps.Marker({
 	        position: myLatLng,
 	        animation: google.maps.Animation.DROP,
 	        map: map,
-	        title: loc[0],
-	        zIndex: loc[3]
+	        title: loc["name"]
 	    });
 	}
 }
@@ -130,9 +132,9 @@ function formToJSONComment() {
 }
 
 function formToJSONLatLng() {
-	console.log('UDID: '+deviceID);
+	/*console.log('UDID: '+deviceID);
 	console.log('Lat: '+lat);
-	console.log('Lng: '+lng);
+	console.log('Lng: '+lng);*/
     return JSON.stringify({
         "UDID": deviceID,
         "Lat": lat,
