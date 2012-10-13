@@ -8,7 +8,7 @@ var lng,lat,deviceID;
 function onDeviceReady() {
 	
 	deviceID = device.uuid;
-	watchID = navigator.geolocation.watchPosition(setLatLng, onFail, {enableHighAccuracy: true});
+	navigator.geolocation.watchPosition(setLatLng, onFail, {enableHighAccuracy: true});
 
 	$( document ).delegate("#plant", "pageinit", function() {
 		plantFlag();
@@ -87,6 +87,15 @@ function mapAllLoc(data){
     
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
 	
+	// Custom marker not working
+	var marker = new google.maps.Marker({
+	        position: myLatLng,
+	        animation: google.maps.Animation.DROP,
+	        map: map,
+	       
+	        title: "This is you!"
+	    });
+	
     for (var i = 0; i < data.length; i++) {
     	var loc = data[i];
     	var myLatLng = new google.maps.LatLng(loc["Lat"], loc["Lng"]);
@@ -96,11 +105,21 @@ function mapAllLoc(data){
 	        map: map,
 	        title: loc["name"]
 	    });
+	    
+	    var contentString = "Name: "+loc["Name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
+	    
+	    var infowindow = new google.maps.InfoWindow({
+		    content: contentString
+		});
+		
+		google.maps.event.addListener(marker, 'click', function() {
+		  infowindow.open(map,marker);
+		});
 	}
 }
 
 function plantFlag(){
-
+	// Ajax POST using addUUID and then on fail POST to plant
 	$.ajax({
 	  type: "POST",
 	  contentType: 'application/json',
