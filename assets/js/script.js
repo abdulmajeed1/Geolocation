@@ -93,7 +93,10 @@ function setLatLng(position){
 
 /* Initialize Map */
 function mapAllLoc(data){
-	var myLatlng = new google.maps.LatLng(lat, lng);
+	navigator.geolocation.watchPosition(curentLatLng, onFail,{enableHighAccuracy: true});
+	var curentLatLng = function(position) {
+		new google.maps.LatLng(position.coords.longitude, position.coords.latitude);
+	};
 	var aclCenter = new google.maps.LatLng(30.268167, -97.768839);
 	
 	var mapOptions = {
@@ -106,10 +109,13 @@ function mapAllLoc(data){
 	
 	// Custom marker not working
 	var centermarker = new google.maps.Marker({
-	        position: myLatLng,
+	        position: curentLatLng,
 	        animation: google.maps.Animation.DROP,
 	        map: map,
-	        icon: "../img/iconMe_N.png",
+	        icon: {
+			    path: google.maps.SymbolPath.CIRCLE,
+			    scale: 10
+			  },
 	        title: "This is you!"
 	    });
 	
@@ -125,13 +131,13 @@ function mapAllLoc(data){
 	    
 	    var contentString = "Name: "+loc["Name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
 	    
-	    /*var infowindow = new google.maps.InfoWindow({
+	    var infowindow = new google.maps.InfoWindow({
 		    content: contentString
 		});
 		
 		google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.open(map,marker);
-		});*/
+		});
 	}
 }
 
