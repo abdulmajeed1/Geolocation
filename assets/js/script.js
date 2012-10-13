@@ -11,8 +11,25 @@ function onDeviceReady() {
 	navigator.geolocation.watchPosition(setLatLng, onFail, {enableHighAccuracy: true});
 
 	$( document ).delegate("#plant", "pageinit", function() {
-		plantFlag();
-		addUUID();
+		
+		
+		$.ajax({
+		  type: "GET",
+		  dataType: "JSON",
+		  url: "http://api.chasemoody.com/acl/users/"+deviceID,
+		  success: function(data){
+		  	console.log(data);
+		  	if(data === false){
+		  		addUUID();
+		  	}else{
+		  		console.log('Exists');
+		  	}
+		  }
+		});
+		
+		$('.planFunc').click(function(){
+			plantFlag();
+		});
 	});
 	
 	$( document ).delegate("#map", "pageinit", function() {
@@ -88,7 +105,7 @@ function mapAllLoc(data){
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
 	
 	// Custom marker not working
-	var marker = new google.maps.Marker({
+	var centermarker = new google.maps.Marker({
 	        position: myLatLng,
 	        animation: google.maps.Animation.DROP,
 	        map: map,
@@ -108,13 +125,13 @@ function mapAllLoc(data){
 	    
 	    var contentString = "Name: "+loc["Name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
 	    
-	    var infowindow = new google.maps.InfoWindow({
+	    /*var infowindow = new google.maps.InfoWindow({
 		    content: contentString
 		});
 		
 		google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.open(map,marker);
-		});
+		});*/
 	}
 }
 
@@ -126,9 +143,12 @@ function plantFlag(){
 	  dataType: "json",
       data: formToJSONLatLng(),
 	  url: "http://api.chasemoody.com/acl/plant",
+	  beforeSend: function() {
+		$('.geoContainer').empty().append('<center><img src="assets/img/ajax-loader.gif"/></center>');
+	  },
 	  success: function(data){
 	  	console.log(data);
-	  	$('#flag_container').empty().append('<p>Flag Planted</p>');
+	  	$('.geoContainer').empty().append('<p>Flag Planted</p><p>Lat: '+data['Lat']+'</p><p>Lng: '+data['Lng']+'</p>');
 	  }
 	});
 	
@@ -181,7 +201,7 @@ function addUUID(){
 
 function formToJSONDevice(){
 	return JSON.stringify({
-		"name": "New User",
+		"name": device.name,
 		"UDID": deviceID
 	});
 }
