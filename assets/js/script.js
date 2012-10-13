@@ -92,7 +92,7 @@ function mapAllLoc(data){
 	        position: myLatLng,
 	        animation: google.maps.Animation.DROP,
 	        map: map,
-	       
+	        icon: "../img/iconMe_N.png",
 	        title: "This is you!"
 	    });
 	
@@ -119,7 +119,7 @@ function mapAllLoc(data){
 }
 
 function plantFlag(){
-	// Ajax POST using addUUID and then on fail POST to plant
+	// Ajax POST using addUID on fail plant flag
 	$.ajax({
 	  type: "POST",
 	  contentType: 'application/json',
