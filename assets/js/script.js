@@ -117,7 +117,7 @@ function mapAllLoc(data){
 	        title: loc["name"]
 	    });
 	    
-	    var contentString = "Name: "+loc["Name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
+	    var contentString = "Name: "+loc["name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
 		
 		google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.setContent(contentString);
@@ -125,7 +125,7 @@ function mapAllLoc(data){
 		});
 	}
 	
-	var curentLatLng = function(position) {
+	var curentLatLng = function(position, map) {
 		var current = new google.maps.LatLng(position.coords.longitude, position.coords.latitude);
 		
 		var centermarker = new google.maps.Marker({
