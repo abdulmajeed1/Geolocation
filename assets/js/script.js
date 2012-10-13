@@ -103,9 +103,11 @@ function mapAllLoc(data){
     
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
 	
-	var infowindow = new google.maps.InfoWindow({
-		    content: 'Loading...'
-		});
+	function infoCallback(infowindow, marker) { 
+		  return function() {
+		    infowindow.open(map, marker);
+		  };
+    }
 	
     for (var i = 0; i < data.length; i++) {
     	var loc = data[i];
@@ -119,10 +121,19 @@ function mapAllLoc(data){
 	    
 	    var contentString = "Name: "+loc["name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
 		
-		google.maps.event.addListener(marker, 'click', function() {
+		/*google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.setContent(contentString);
-		  infowindow.open(map, this);
-		});
+		  infowindow.open(map, marker);
+		});*/
+		
+		var infowindow = new google.maps.InfoWindow();
+        infowindow.setContent(contentString);
+	      google.maps.event.addListener(
+	        marker, 
+	        'click', 
+	        infoCallback(infowindow, marker)
+	      );
+          
 	}
 	
 	var curentLatLng = function(position, map) {
