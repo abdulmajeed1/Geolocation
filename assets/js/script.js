@@ -93,10 +93,6 @@ function setLatLng(position){
 
 /* Initialize Map */
 function mapAllLoc(data){
-	navigator.geolocation.watchPosition(curentLatLng, onFail,{enableHighAccuracy: true});
-	var curentLatLng = function(position) {
-		new google.maps.LatLng(position.coords.longitude, position.coords.latitude);
-	};
 	var aclCenter = new google.maps.LatLng(30.268167, -97.768839);
 	
 	var mapOptions = {
@@ -107,17 +103,9 @@ function mapAllLoc(data){
     
     var map = new google.maps.Map(document.getElementById('map_holder'),mapOptions);
 	
-	// Custom marker not working
-	var centermarker = new google.maps.Marker({
-	        position: curentLatLng,
-	        animation: google.maps.Animation.DROP,
-	        map: map,
-	        icon: {
-			    path: google.maps.SymbolPath.CIRCLE,
-			    scale: 10
-			  },
-	        title: "This is you!"
-	    });
+	var infowindow = new google.maps.InfoWindow({
+		    content: 'Loading...'
+		});
 	
     for (var i = 0; i < data.length; i++) {
     	var loc = data[i];
@@ -130,15 +118,29 @@ function mapAllLoc(data){
 	    });
 	    
 	    var contentString = "Name: "+loc["Name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
-	    
-	    var infowindow = new google.maps.InfoWindow({
-		    content: contentString
-		});
 		
 		google.maps.event.addListener(marker, 'click', function() {
-		  infowindow.open(map,marker);
+		  infowindow.setContent(contentString);
+		  infowindow.open(map, this);
 		});
 	}
+	
+	var curentLatLng = function(position) {
+		var current = new google.maps.LatLng(position.coords.longitude, position.coords.latitude);
+		
+		var centermarker = new google.maps.Marker({
+	        position: current,
+	        animation: google.maps.Animation.DROP,
+	        map: map,
+	        icon: {
+			    path: google.maps.SymbolPath.CIRCLE,
+			    scale: 10
+			  },
+	        title: "This is you!"
+	    });
+	};
+	
+	navigator.geolocation.watchPosition(curentLatLng, onFail,{enableHighAccuracy: true});
 }
 
 function plantFlag(){
