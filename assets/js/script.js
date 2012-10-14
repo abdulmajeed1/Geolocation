@@ -156,17 +156,20 @@ function mapAllLoc(data){
 
 function plantFlag(){
 	// Ajax POST using addUID on fail plant flag
+	var comment = $('#plantComment').val();
+	
 	$.ajax({
 	  type: "POST",
 	  contentType: 'application/json',
 	  dataType: "json",
-      data: formToJSONLatLng(),
+      data: formToJSONLatLng(comment),
 	  url: "http://api.chasemoody.com/acl/plant",
 	  beforeSend: function() {
 		$('.geoContainer').empty().append('<center><img src="assets/img/ajax-loader.gif"/></center>');
 	  },
 	  success: function(data){
 	  	console.log(data);
+	  	$('#plantComment').val('');
 	  	$('.geoContainer').empty().append('<p>Flag Planted</p><p>Lat: '+data['Lat']+'</p><p>Lng: '+data['Lng']+'</p>');
 	  }
 	});
@@ -194,14 +197,15 @@ function formToJSONComment() {
         });
 }
 
-function formToJSONLatLng() {
+function formToJSONLatLng(comment) {
 	/*console.log('UDID: '+deviceID);
 	console.log('Lat: '+lat);
 	console.log('Lng: '+lng);*/
     return JSON.stringify({
         "UDID": deviceID,
         "Lat": lat,
-        "Lng": lng
+        "Lng": lng,
+        "comment": comment
         });
 }
 
@@ -225,3 +229,4 @@ function formToJSONDevice(){
 	});
 }
 
+// document.addEventListener("pause", yourCallbackFunction, false); //Use this to disconnect geo
