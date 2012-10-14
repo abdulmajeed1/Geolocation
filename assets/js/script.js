@@ -119,7 +119,8 @@ function mapAllLoc(data){
 	        title: loc["name"]
 	    });
 	    
-	    var contentString = "Name: "+loc["name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"];
+	    var contentString = "Name: "+loc["name"]+"<br/>Lat: "+loc["Lat"]+"<br/>Lng: "+loc["Lng"]
+	    +"<br/>Timestamp: "+loc["timestamp"]+"<br/>Comment: "+loc["comment"];
 		
 		/*google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.setContent(contentString);
